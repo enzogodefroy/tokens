@@ -34,11 +34,10 @@ public class AdaptateurCouleur extends BaseAdapter {
         modele.setLesCouleurs( couleurs );
     }
 
-    public void ajouterCouleur( Couleur couleur, String name ) {
+    public void ajouterCouleur( Couleur couleur) {
 
-        String[] nom = new String[]{name};
         DBHelper dbHelper = new DBHelper(context);
-        dbHelper.updateCouleurByNom(couleur, nom);
+        dbHelper.addCouleur(couleur);
         this.notifyDataSetChanged();
     }
 
@@ -49,8 +48,12 @@ public class AdaptateurCouleur extends BaseAdapter {
         this.notifyDataSetChanged();
     }
 
-    public void changerCouleur( int position , Couleur  couleur ) {
-        modele.modifierCouleur( position , couleur );
+    public void changerCouleur( Couleur couleur, String name ) {
+
+        String[] colorName = new String[] {name};
+
+        DBHelper dbHelper = new DBHelper(context);
+        dbHelper.updateCouleurByNom(couleur, colorName);
         this.notifyDataSetChanged();
     }
 
@@ -86,7 +89,9 @@ public class AdaptateurCouleur extends BaseAdapter {
             public void onClick(View view) {
                 // Lancer l'activite choix couleur en mode modif
                 Intent intentionChoixCouleur = new Intent( context , ActiviteChoixCouleur.class );
-                Couleur couleur = modele.getLesCouleurs().get( position );
+
+                Couleur couleur = modele.getLesCouleurs().get(position);
+
                 intentionChoixCouleur.putExtra("a" , couleur.getA());
                 intentionChoixCouleur.putExtra("r" , couleur.getR());
                 intentionChoixCouleur.putExtra("v" , couleur.getV());
@@ -116,7 +121,6 @@ public class AdaptateurCouleur extends BaseAdapter {
 
         tvCouleur.setBackgroundColor(Color.argb( a , r, v ,b ));
         tvNomCouleur.setText( ((Couleur)getItem( position )).getNom() );
-        btnSupprimer.setTag( ((Couleur)getItem( position )).getId() );
         //itemView.setBackgroundColor(  Color.argb(255, 200,200,200));
         return itemView;
     }

@@ -30,6 +30,7 @@ public class ActiviteChoixCouleur extends AppCompatActivity implements SeekBar.O
     private int r = 0;
     private int v = 0;
     private int b = 0;
+    private String nomCouleur;
     private int resultat = RESULT_OK;
 
 
@@ -91,6 +92,8 @@ public class ActiviteChoixCouleur extends AppCompatActivity implements SeekBar.O
             sbVert.setProgress( v );
             sbBleu.setProgress( b );
             etNomCouleur.setText( nomCouleur );
+
+            this.nomCouleur = nomCouleur;
         }
 
     }
@@ -126,6 +129,7 @@ public class ActiviteChoixCouleur extends AppCompatActivity implements SeekBar.O
         resultIntent.putExtra("v" , v);
         resultIntent.putExtra("b" , b);
         resultIntent.putExtra( "nom" , etNomCouleur.getText().toString());
+        resultIntent.putExtra("baseName", this.nomCouleur);
         if ( requeteModification) {
             resultIntent.putExtra("requete", REQUETE_MODIFICATION);
         }

@@ -37,7 +37,25 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("g", couleur.getV() );
         contentValues.put("b", couleur.getB() );
 
-        db.update("Couleur", contentValues, "name=?", nom);
+        db.update("Couleur", contentValues, "nom=?", nom);
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+        db.close();
+    }
+
+    public void addCouleur(Couleur couleur)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("nom", couleur.getNom() );
+        contentValues.put("a", couleur.getA() );
+        contentValues.put("r", couleur.getR() );
+        contentValues.put("g", couleur.getV() );
+        contentValues.put("b", couleur.getB() );
+
+        db.insert("Couleur", null, contentValues);
         db.setTransactionSuccessful();
         db.endTransaction();
         db.close();

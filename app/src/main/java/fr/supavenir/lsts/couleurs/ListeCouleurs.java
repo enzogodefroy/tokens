@@ -47,14 +47,16 @@ public class ListeCouleurs extends AppCompatActivity {
                         int v = result.getData().getIntExtra("v", 255);
                         int b = result.getData().getIntExtra("b", 255);
                         String nomCouleur = result.getData().getStringExtra("nom");
-                        //Log.i("COULEUR","couleur "+a+" , " + r + " , " + v +" , "+ b +" " + nomCouleur);
+
+                        String baseName = result.getData().getStringExtra("baseName");
 
                         String requete = result.getData().getStringExtra("requete");
                         if ( requete.equals("AJOUT")) {
                             adaptateur.ajouterCouleur(new Couleur(a, r, v, b, nomCouleur));
                         }
                         else if ( requete.equals("MODIF"))  {
-                            /*adaptateur.changerCouleur( adaptateur.getPositionEnCours() , new Couleur(0,a, r, v, b, nomCouleur) );*/
+                            adaptateur.changerCouleur( new Couleur(a, r, v, b, nomCouleur), baseName );
+                            formatListCouleur();
                         }
                     }
                     else if ( result.getResultCode() == RESULT_CANCELED )
@@ -74,9 +76,6 @@ public class ListeCouleurs extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView( R.layout.activite_liste_couleurs );
 
-        // La base de donnée a-t'elle été remplie ?
-        // Si c'est le cas, cela a été sauvegardé dans les préférences
-
         boolean dbUpToDate = checkDbState();
         if(!dbUpToDate) {
             createAndPopulateDb();
@@ -93,8 +92,6 @@ public class ListeCouleurs extends AppCompatActivity {
                 lanceurActiviteChoixCouleur.launch( intentionChoixCouleur );
             }
         });
-
-
     }
 
     public void formatListCouleur() {
@@ -160,7 +157,6 @@ public class ListeCouleurs extends AppCompatActivity {
         while (cursor.moveToNext()) {
 
             String nom = cursor.getString(cursor.getColumnIndex("nom"));
-            int id = cursor.getInt(cursor.getColumnIndex("id"));
             int  a = cursor.getInt(cursor.getColumnIndex("a"));
             int  r = cursor.getInt(cursor.getColumnIndex("r"));
             int  g = cursor.getInt(cursor.getColumnIndex("g"));

@@ -1,7 +1,6 @@
 package fr.supavenir.lsts.couleurs;
 
 public class Couleur {
-
     int a;
     int r;
     int v;
