@@ -1,4 +1,4 @@
-package fr.supavenir.lsts.couleurs;
+package fr.supavenir.lsts.tokens;
 
 import android.content.Context;
 
